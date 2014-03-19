@@ -1,0 +1,21 @@
+{
+    "name": "nasext/filter-form-control",
+    "type": "library",
+    "description": "Data form filter control for Nette Framework",
+    "keywords": ["nette", "nasext", "FilterFormControl"],
+    "license": ["MIT"],
+    "authors": [
+        {
+            "name": "Dusan Hudak"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "nette/nette": "@dev"
+    },
+    "autoload": {
+        "psr-0": {
+			"NasExt\\Controls\\": "src/"
+		}
+    }
+}
