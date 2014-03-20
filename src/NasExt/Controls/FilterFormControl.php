@@ -47,6 +47,17 @@ class FilterFormControl extends Control
 	protected $dataFilter;
 
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		$reflection = $this->getReflection();
+		$dir = dirname($reflection->getFileName());
+		$name = $reflection->getShortName();
+		$this->templateFile = $dir . DIRECTORY_SEPARATOR . $name . '.latte';
+	}
+
+
 	/**
 	 * @param  \Closure|callable $dataFilter
 	 * @return FilterFormControl
@@ -76,17 +87,6 @@ class FilterFormControl extends Control
 	public function setDefaultValues($values)
 	{
 		$this->defaultValues = $values;
-		return $this;
-	}
-
-
-	/**
-	 * @param string $file
-	 * @return FilterFormControl
-	 */
-	public function setTemplateFile($file)
-	{
-		$this->templateFile = $file;
 		return $this;
 	}
 
@@ -219,14 +219,20 @@ class FilterFormControl extends Control
 	 */
 	public function getTemplateFile()
 	{
-		if ($this->templateFile) {
-			return $this->templateFile;
-		}
+		return $this->templateFile;
+	}
 
-		$reflection = $this->getReflection();
-		$dir = dirname($reflection->getFileName());
-		$name = $reflection->getShortName();
-		return $dir . DIRECTORY_SEPARATOR . $name . '.latte';
+
+	/**
+	 * @param string $file
+	 * @return FilterFormControl
+	 */
+	public function setTemplateFile($file)
+	{
+		if ($file) {
+			$this->templateFile = $file;
+		}
+		return $this;
 	}
 
 
