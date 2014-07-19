@@ -101,10 +101,17 @@ class FilterFormControl extends Control
 			parse_str($this->data, $data);
 		}
 
+		// add null values
+		foreach ($this->getComponent('form')->getComponents() as $key => $value) {
+			if (!isset($data[$key]) || $data[$key] === '') {
+				$data[$key] = NULL;
+			}
+		}
+
 		// add default values
 		if (!empty($this->defaultValues)) {
 			foreach ($this->defaultValues as $key => $value) {
-				if (!isset($data[$key]) || $data[$key] === '') {
+				if (!isset($data[$key])) {
 					$data[$key] = $value;
 				}
 			}
@@ -171,11 +178,11 @@ class FilterFormControl extends Control
 		!$this->ajaxRequest ? : $elementPrototype->class[] = 'ajax';
 
 		$form->addSubmit('filter', 'Filter')
-			->onClick[] = callback($this, 'processSubmit');
+			->onClick[] = Callback::closure($this, 'processSubmit');
 
 		$form->addSubmit('reset', 'Reset')
 			->setValidationScope(FALSE)
-			->onClick[] = callback($this, 'processReset');
+			->onClick[] = Callback::closure($this, 'processReset');
 
 		return $form;
 	}
@@ -244,7 +251,7 @@ class FilterFormControl extends Control
 		$form = $this['form'];
 
 		foreach ($data as $key => $value) {
-			if ($value !== '') {
+			if ($value !== '' && isset($form[$key])) {
 				$form[$key]->setValue($value);
 			}
 		}
@@ -260,4 +267,5 @@ class FilterFormControl extends Control
 		$template->setFile($this->getTemplateFile());
 		$template->render();
 	}
+
 }
