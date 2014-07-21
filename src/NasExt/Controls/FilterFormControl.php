@@ -135,7 +135,19 @@ class FilterFormControl extends Control
 	 * @param array|string $data
 	 * @return FilterFormControl
 	 */
-	private function setData($data)
+	public function setData($data)
+	{
+		$this->saveData($data);
+		$this->loadData();
+		return $this;
+	}
+
+
+	/**
+	 * @param array|string $data
+	 * @return FilterFormControl
+	 */
+	private function saveData($data)
 	{
 		$filter = array();
 		foreach ($data as $key => $value) {
@@ -195,7 +207,7 @@ class FilterFormControl extends Control
 	public function processSubmit(SubmitButton $button)
 	{
 		$values = $button->getForm()->getValues(TRUE);
-		$this->setData($values);
+		$this->saveData($values);
 		$this->onFilter($this, $this->getData());
 
 		if (!$this->presenter->isAjax()) {
@@ -243,7 +255,7 @@ class FilterFormControl extends Control
 	}
 
 
-	private function setDefaultsValues()
+	private function loadData()
 	{
 		$data = $this->getData();
 
@@ -260,7 +272,7 @@ class FilterFormControl extends Control
 
 	public function render()
 	{
-		$this->setDefaultsValues();
+		$this->loadData();
 
 		$template = $this->template;
 		$template->_form = $template->form = $this->getComponent('form');
