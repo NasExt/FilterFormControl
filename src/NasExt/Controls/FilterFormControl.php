@@ -209,10 +209,6 @@ class FilterFormControl extends Control
 		$values = $button->getForm()->getValues(TRUE);
 		$this->saveData($values);
 		$this->onFilter($this, $this->getData());
-
-		if (!$this->presenter->isAjax()) {
-			$this->presenter->redirect('this');
-		}
 	}
 
 
@@ -226,10 +222,6 @@ class FilterFormControl extends Control
 		$form->setValues(array(), TRUE);
 		$this->data = NULL;
 		$this->onReset($this, $this->getData());
-
-		if (!$this->presenter->isAjax()) {
-			$this->presenter->redirect('this');
-		}
 	}
 
 
