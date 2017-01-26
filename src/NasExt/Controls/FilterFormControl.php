@@ -185,7 +185,7 @@ class FilterFormControl extends Control
 		$form = new Form();
 		$elementPrototype = $form->getElementPrototype();
 
-		$elementPrototype->class[] = lcfirst($this->reflection->getShortName());
+		$elementPrototype->class[] = lcfirst(self::getReflection()->getShortName());
 		$elementPrototype->class[] = lcfirst($this->name);
 		!$this->ajaxRequest ? : $elementPrototype->class[] = 'ajax';
 
