@@ -79,14 +79,18 @@ class FilterFormControl extends Control
 		return $this;
 	}
 
-
 	/**
 	 * @param array $values
-	 * @return FilterFormControl
+	 * @param bool  $merge
+	 * @return $this
 	 */
-	public function setDefaultValues($values)
-	{
-		$this->defaultValues = $values;
+	public function setDefaultValues($values, $merge = TRUE) {
+		if ($merge) {
+			$this->defaultValues = array_merge($values, $this->defaultValues);
+		} else {
+			$this->defaultValues = $values;
+		}
+
 		return $this;
 	}
 
